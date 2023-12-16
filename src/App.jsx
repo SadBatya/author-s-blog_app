@@ -1,15 +1,10 @@
 import './App.css';
-import styled from 'styled-components';
 import { Route, Routes } from 'react-router-dom';
-
-
-const Header = () => <div>Шапка</div>
-const Footer = () => <div>Футер</div>
-const Main = () => <div>Контент страницы</div>
+import { Header, Main, Footer} from './components/index'
 
 function App() {
   return (
-    <div className='flex text-center justify-between flex-col'>
+    <div className='flex justify-between flex-col text-center min-h-screen'>
       <Header />
       <Main>
         <h2>Контент страницы</h2>
