@@ -6,7 +6,8 @@ const city = 'Miami';
 
 const WeatherComponent = () => {
   const [weatherData, setWeatherData] = useState(null);
-
+  const [error, setError] = useState('')
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -18,9 +19,13 @@ const WeatherComponent = () => {
         console.error('Error fetching weather data:', error);
       }
     };
-
     fetchData();
   }, []); 
+
+
+  if(error){
+    return <div>{error && `Ошибка загрузки ${error}`}</div>
+  }
 
   return (
     <div className='flex justify-between items-center shadow-3xl p-2'>
@@ -29,10 +34,8 @@ const WeatherComponent = () => {
         <p>sadbatya@mail.ru</p>
       </div>
       <div>
-        
         {weatherData ? (
           <>
-            
             <h2>
               <span>{new Date().toLocaleString('ru', { day: 'numeric', month: 'long'})} </span>
               {weatherData.name}
@@ -42,7 +45,7 @@ const WeatherComponent = () => {
           </>
         ) : (
           <p>Loading weather data...</p>
-        )}
+          )}
       </div>
     </div>
   );

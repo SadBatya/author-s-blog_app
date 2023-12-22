@@ -1,14 +1,21 @@
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector, useStore } from 'react-redux'
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { server } from '../bff';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Button, Input, H2 } from './../components';
+import { Link, Navigate } from 'react-router-dom';
+import { setUser } from '../store/actions';
+import { selectUserRole } from '../selectors';
+import { ROLE } from '../bff/constants';
+
 
 const authFormScheme = yup.object().shape({
   login: yup
     .string()
     .required('Заполните логин')
-    .matches(/^\w+$/, 'Неверны логин, допускаются только буквы и цифры')
+    .matches(/^\w+$/, 'Неверный логин, допускаются только буквы и цифры')
     .min(3, 'Неверный логин, миниму 3 символа')
     .max(15, 'Неверный логин, максимум 15 символов'),
   password: yup
@@ -23,8 +30,10 @@ const authFormScheme = yup.object().shape({
 });
 
 export default function authorization() {
+
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -35,38 +44,66 @@ export default function authorization() {
     resolver: yupResolver(authFormScheme),
   });
 
-  const [serverError, setServerError] = useState('')
+  const [serverError, setServerError] = useState(null)
+
+  const dispatch = useDispatch()
+  const store = useStore()
+  const roleId = useSelector(selectUserRole)
+
+  useEffect(() => {
+    let currenWasLogout = store.getState().app.wasLogout;
+
+    return store.subscribe(() => {
+      let prevWasLogout = currenWasLogout;
+      currenWasLogout = store.getState().app.wasLogout
+
+      if(currenWasLogout !== prevWasLogout){
+        reset()
+      }
+    })
+
+  }, [reset, store])
+
+
 
   const onSubmit = ({ login, password }) => {
     server.authorize(login, password).then(({ error, response }) => {
       if (error) {
         setServerError(error)
+        return
       }
+
+      dispatch(setUser(response))
     });
   };
 
   const formError = errors?.login?.message || errors?.password?.message
   const errorMessage =  formError || serverError
 
+  if(roleId !== ROLE.GUEST) {
+    return <Navigate to='/' />
+  }
+
+
   return (
     <div>
-      <h2>Авторизация</h2>
+      <H2>Авторизация</H2>
       <form
+        className='flex flex-col justify-center items-center gap-10 mt-5'
         onSubmit={handleSubmit(onSubmit)}
         action=''
       >
-        <input
-          type='text'
-          placeholder='Введите логин...'
-          {...register('login')}
-        />
-        <input
-          type='password'
-          placeholder='Введите пароль...'
-          {...register('password')}
-        />
-        <button type='submit' disabled={!!formError}>Войти</button>
-        { errorMessage && <div>{errorMessage}</div>}
+        <Input type={'text'} placeholder={'Введите текст...'} {...register('login',  {
+          onChange: () => setServerError(null)
+        })}/>
+        <Input type={'password'} placeholder={'Введите пароль...'} {...register('password', {
+          onChange: () => setServerError(null)
+        })}/> 
+        <Button text={'Авторизоваться'} type='submit' disabled={!!formError} />
+        <Link to='/register'>
+          <Button text={'Регистрация'} type='submit' disabled={!!formError} />
+        </Link>
+        { errorMessage && <div className='text-rose-600'>{errorMessage}</div>}
       </form>
     </div>
   );
