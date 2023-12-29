@@ -6,6 +6,34 @@
       "password": "1234qwerty",
       "registered_at": "2030-09-23",
       "role_id": 0
+    },
+    {
+      "login": "volodya",
+      "password": "14235678Asdf",
+      "register_at": "1970-02-16 12:10",
+      "role_id": 2,
+      "id": "wygJL9v"
+    },
+    {
+      "login": "andrey",
+      "password": "14235678Asdf",
+      "register_at": "1970-03-11 15:17",
+      "role_id": 2,
+      "id": "JKHOjtE"
+    },
+    {
+      "login": "andreyka",
+      "password": "14235678Asdf",
+      "register_at": "1970-05-11 00:07",
+      "role_id": 2,
+      "id": "Gnokrn1"
+    },
+    {
+      "login": "sadbatya",
+      "password": "14235678vova",
+      "register_at": "1970-04-08 15:34",
+      "role_id": 2,
+      "id": "MuR2lrI"
     }
   ],
   "role": [

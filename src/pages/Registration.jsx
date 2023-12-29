@@ -1,11 +1,12 @@
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { server } from '../bff';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button, Input, H2 } from './../components';
 import { Navigate } from 'react-router-dom';
+import { userResetForm } from '../hooks/index.js'
 import { setUser } from '../store/actions';
 import { selectUserRole } from '../selectors';
 import { ROLE } from '../bff/constants';
@@ -50,21 +51,10 @@ export default function registration() {
   const [serverError, setServerError] = useState(null);
 
   const dispatch = useDispatch();
-  const store = useStore();
+  
   const roleId = useSelector(selectUserRole);
 
-  useEffect(() => {
-    let currenWasLogout = store.getState().app.wasLogout;
-
-    return store.subscribe(() => {
-      let prevWasLogout = currenWasLogout;
-      currenWasLogout = store.getState().app.wasLogout;
-
-      if (currenWasLogout !== prevWasLogout) {
-        reset();
-      }
-    });
-  }, [reset, store]);
+  userResetForm(reset)
 
   const onSubmit = ({ login, password }) => {
     server.register(login, password).then(({ error, response }) => {

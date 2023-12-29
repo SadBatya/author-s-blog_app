@@ -3,7 +3,7 @@ import { addUser } from './add-User';
 import { createSession } from './create-session';
 import { sessions } from './sessions';
 export const server = {
-  
+
   async logout(session) {
     sessions.remove(session)
   },
@@ -37,16 +37,16 @@ export const server = {
   },
 
   async register(regLogin, regPassword) {
-    const user = await getUser(regLogin);
+    const existedUser = await getUser(regLogin);
 
-    if (user) {
+    if (existedUser) {
       return {
         error: 'Такого пользователь уже существует',
         response: null,
       };
     }
 
-    await addUser(regLogin, regPassword);
+    const user = await addUser(regLogin, regPassword);
 
     return {
       error: null,
