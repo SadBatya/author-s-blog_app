@@ -1,4 +1,4 @@
-import { removeComment } from './session';
+import { removeComment } from './operations';
 import { ROLE } from './constants';
 export const createSession = (roleId) => {
   const session = {

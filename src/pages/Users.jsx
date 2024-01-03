@@ -4,7 +4,14 @@ import { UserInfo } from '../components'
 import { Link } from "react-router-dom";
 
 export default function Users() {
-  const users = [];
+  const users = [
+    {
+      id: 1234,
+      login: 'vladimir',
+      registeredAt: '12-12-2023',
+      roleId: 'guest'
+    }
+  ];
   const dispatch = useDispatch()
 
   return (
@@ -15,11 +22,12 @@ export default function Users() {
           <p>Логин</p>
           <p>Дата регистрации</p>
           <p>Роль</p>
+          <p></p>
         </div>
         <div>
           <UserInfo />
-          {UserInfo.map(({ id, login, registeredAt, roleId}) => (
-            <div>{login}</div>
+          {users.map(({id, login, registeredAt, roleId }) => (
+            <UserInfo key={id} id={id} login={login} registeredAt={registeredAt} roleId={roleId}/>
           ))}
         </div>
         
