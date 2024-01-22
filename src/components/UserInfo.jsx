@@ -8,7 +8,8 @@ import { useDispatch } from "react-redux"
 export default function UserInfo({ id, login, registeredAt, roleId }) {
   const dispatch = useDispatch()
   const roles = [];
-  const users = []
+  
+  const users = [];
 
   const onRoleChange = () => {
 
