@@ -1,4 +1,4 @@
-import { register, authorize, fetchUsers, fetchRoles, logout } from './operations'
+import { register, authorize, fetchUsers, fetchRoles, logout, updateUserRole, removeUser } from './operations'
 
 
 export const server = {
@@ -7,4 +7,6 @@ export const server = {
   register,
   fetchUsers,
   fetchRoles,
+  updateUserRole,
+  removeUser
 };

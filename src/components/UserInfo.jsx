@@ -1,39 +1,55 @@
-import { Link } from "react-router-dom"
-import { Icon } from './index'
-import { ROLE } from "../bff/constants"
-import { useDispatch } from "react-redux"
+import { Link } from "react-router-dom";
+import { Icon } from "./index";
+import { ROLE } from "../bff/constants";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { useServerRequest } from "../hooks";
 
+const UserInfo = ({ id, login, registeredAt, roleId: userRoleId, roles, userId, onUserRemove }) => {
+  const [selectedRoleId, setSelectedRoleId] = useState(userRoleId)
 
+  const requestServer = useServerRequest()
 
-export default function UserInfo({ id, login, registeredAt, roleId }) {
-  const dispatch = useDispatch()
-  const roles = [];
-  
-  const users = [];
+  const [ ,setInitialRoleId] = useState(userRoleId)
 
-  const onRoleChange = () => {
-
+  const onRoleChange = ({ target }) => {
+    setSelectedRoleId(Number(target.value))
   }
 
+  const onRoleSave = (userId, newUserRoleId) => {
+    requestServer('updateUserRole', userId, newUserRoleId).then(() => {
+      setInitialRoleId(newUserRoleId)
+    })
+  }
 
   return (
-    <div className="flex w-2/4 m-auto items-center gap-2 mt-2">
-      <div key={id} className="flex w-full justify-between p-2 rounded-md border items-center">
-        <p>Login {login}</p>
-        <p>registeredAt {registeredAt}</p>
-        <select value={roleId} onChange={onRoleChange}>
+    <div className="flex w-8/12 m-auto items-center gap-2 mt-2">
+      <div className="flex w-full justify-between p-2 rounded-md border items-center">
+        <p>
+          <strong>Login:</strong> {login}
+        </p>
+        <p>
+          <strong>Registered At:</strong> {registeredAt}
+        </p> 
+        <strong>Role:</strong> {ROLE[userRoleId]}
+        <select value={selectedRoleId} onChange={onRoleChange}>
           {roles.map(({ id, name }) => (
-            <option key={id} value={id}>{name}</option>
+            <option key={id} value={id}>
+              {name}
+            </option>
           ))}
         </select>
-        <p>Role {ROLE[roleId]}</p>
-        <Link onClick={() => dispatch()}>
+        <p>
+        </p>
+        <Link to="#" onClick={() => onRoleSave(id, selectedRoleId)}>
           <Icon id={'fa-floppy-o'} parameters={'text-xl'}/>
         </Link>
       </div>
-      <Link onClick={() => dispatch()}>
+      <Link to="#" onClick={onUserRemove}>
         <Icon id={'fa-trash-o'} parameters={'text-xl'}/>
       </Link>
     </div>
-  )
-}
+  );
+};
+
+export default UserInfo;

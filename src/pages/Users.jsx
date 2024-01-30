@@ -2,11 +2,13 @@ import { H2, UsersContent } from '../components';
 import { UserInfo } from '../components';
 import { useEffect, useState } from 'react';
 import { useServerRequest } from '../hooks';
+import { ROLE } from '../bff/constants';
 
 export default function Users() {
   const [roles, setRoles] = useState([]);
   const [users, setUsers] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [shouldUpdateUserList, setShouldUpdateUserList] = useState(false)
   const requestServer = useServerRequest();
 
   useEffect(() => {
@@ -18,17 +20,18 @@ export default function Users() {
         setErrorMessage(usersResponse.error || rolesResponse.error);
         return;
       }
-
-      setUsers(usersResponse.res);
-      setRoles(rolesResponse.res);
-      console.log(usersResponse.res)
-      console.log(rolesResponse.res)
+      
+      setUsers(usersResponse.response);
+      setRoles(rolesResponse.response);
     });
-  }, []);
+  }, [requestServer, shouldUpdateUserList]);
 
-  useEffect(() => {
-    console.log(users); // Этот console.log вызывается после получения данных
-  }, [users])
+  const onUserRemove = (userId) => {
+    requestServer('removeUser', userId).then(() => {
+      setShouldUpdateUserList(!shouldUpdateUserList)
+    }) 
+  }
+
   return (
     <div>
       <UsersContent error={errorMessage}>
@@ -41,15 +44,15 @@ export default function Users() {
             <p></p>
           </div>
           <div>
-            <UserInfo />
-            {users.map(({ id, login, registeredAt, roleId }) => (
+            {users?.map(({ id, login, register_at, role_id }) => (
               <UserInfo
                 key={id}
                 id={id}
                 login={login}
-                registeredAt={registeredAt}
-                roleId={roleId}
-                roles={roles}
+                registeredAt={register_at}
+                roleId={role_id}
+                roles={roles.filter(({ id: roleId  }) => roleId !== ROLE.GUEST)}
+                onUserRemove={() => onUserRemove(id)}
               />
             ))}
           </div>
