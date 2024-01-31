@@ -8,4 +8,6 @@ export { default as Button } from './Button'
 export { default as H2} from './H2'
 export { default as UserInfo } from './UserInfo'
 export { default as UsersContent } from './UsersContent'
+export { default as PostContent } from './PostContent'
+export { default as Comments } from './Comments' 
 
