@@ -13,7 +13,7 @@ export default function PostContent({
         alt={title}
         className='flex-none self-start mr-5'
       />
-      <div className='flex flex-col text-left'>
+      <div className='flex flex-col text-left mb-2'>
         <H2>{title}</H2>
         <div className='special-panel text-stone-600 flex gap-2 items-center'>
         <Icon id={'fa-calendar'} parameters={'text-xl'}/>
@@ -23,7 +23,7 @@ export default function PostContent({
           <Icon id={'fa-calendar'} parameters={'text-xl'}/>
           <Icon id={'fa-trash'} parameters={'text-xl'}/>
         </div>
-        <div className=' text-gray-800'>{content}</div>
+        <div className='text-gray-800'>{content}</div>
       </div>
     </div>
   );

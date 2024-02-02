@@ -69,8 +69,7 @@ export default function authorization() {
   if(roleId !== ROLE.GUEST) {
     return <Navigate to='/' />
   }
-
-
+  
   return (
     <div>
       <H2>Авторизация</H2>
