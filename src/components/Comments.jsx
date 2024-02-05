@@ -1,9 +1,22 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
 import { Icon } from '../components';
+import { selectUserId } from '../selectors';
 import CommentBox from './CommentBox';
+import { useServerRequest } from '../hooks';
+import { addCommentAsync } from '../store/actions';
 
-export default function Comments({ comments }) {
+export default function Comments({ comments, postId }) {
   const [newComment, setNewComment] = useState('');
+  const dispatch = useDispatch()
+
+  const userId = useSelector(selectUserId)
+
+  const onNewCommentAd = (userId, postId, content) => {
+    dispatch(addCommentAsync(userId, postId, content, requestServer))
+  }
+
+  const requestServer = useServerRequest()
 
   return (
     <>
@@ -21,7 +34,7 @@ export default function Comments({ comments }) {
           placeholder='Введите ваш комментарий...'
         ></textarea>
         <Icon
-          onClick={() => onNewCommentAd(postId)}
+          onClick={() => onNewCommentAd(userId, postId, newComment)}
           id={'fa-paper-plane'}
           parameters={'text-lg'}
         />
