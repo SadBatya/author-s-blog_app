@@ -16,6 +16,7 @@ export default function Post() {
   useEffect(() => {
     dispatch(loadPostAsync(requestServer,params.id))
   }, [dispatch, requestServer, params.id])
+   
   return (
     <div className="px-20 py-10">
       <PostContent post={post}/>
