@@ -8,6 +8,11 @@ export const useServerRequest = () => {
 
   return useCallback(
     (operation, ...params) => {
+      if (!server[operation]) {
+        console.error(`Method ${operation} does not exist in the server object.`);
+        return Promise.reject(`Method ${operation} does not exist in the server object.`);
+      }
+
       const request = ['register', 'authorize', 'fetchPost'].includes(operation)
         ? params
         : [session, ...params];

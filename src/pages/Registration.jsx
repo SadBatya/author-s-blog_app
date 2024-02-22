@@ -63,6 +63,7 @@ export default function registration() {
         return;
       }
       dispatch(setUser(response));
+      sessionStorage.setItem('userData', JSON.stringify(response))
     });
   };
 

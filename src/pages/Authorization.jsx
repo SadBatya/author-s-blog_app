@@ -60,6 +60,7 @@ export default function authorization() {
       }
 
       dispatch(setUser(response))
+      sessionStorage.setItem('userData', JSON.stringify(response))
     });
   };
 

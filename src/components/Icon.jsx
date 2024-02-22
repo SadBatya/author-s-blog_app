@@ -1,6 +1,6 @@
-export default function Icon({ id, parameters }) {
+export default function Icon({ id, parameters, onClick }) {
   return (
-    <i className={`fa ${id} ${parameters} cursor-pointer`} aria-hidden="true" ></i>
+    <i className={`fa ${id} ${parameters} cursor-pointer`} aria-hidden="true" onClick={onClick}></i>
   )
 }
 

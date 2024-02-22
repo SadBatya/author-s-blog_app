@@ -9,14 +9,14 @@ import { addCommentAsync } from '../store/actions';
 export default function Comments({ comments, postId }) {
   const [newComment, setNewComment] = useState('');
   const dispatch = useDispatch()
-
   const userId = useSelector(selectUserId)
+  const requestServer = useServerRequest()
 
-  const onNewCommentAd = (userId, postId, content) => {
-    dispatch(addCommentAsync(userId, postId, content, requestServer))
+  const onNewCommentAd = (userId, postId, content, event) => {    
+    event.preventDefault();
+    dispatch(addCommentAsync(requestServer, userId, postId, content))
   }
 
-  const requestServer = useServerRequest()
 
   return (
     <>
@@ -33,16 +33,16 @@ export default function Comments({ comments, postId }) {
           rows='5'
           placeholder='Введите ваш комментарий...'
         ></textarea>
-        <Icon
-          onClick={() => onNewCommentAd(userId, postId, newComment)}
-          id={'fa-paper-plane'}
-          parameters={'text-lg'}
-        />
+        <button className='self-start box-border' onClick={(event) => onNewCommentAd(userId, postId, newComment, event)} >
+          <Icon
+            id={'fa-paper-plane'}
+            parameters={'text-lg'}
+          />
+        </button>
       </form>
-      {comments.map(({publishedAt, id, author, content}) => (
+      {comments?.map(({publishedAt, id, author, content}) => (
         <CommentBox key={id} id={id} author={author} content={content} publishedAt={publishedAt}/>
       ))}
-      <CommentBox comments={comments} />
     </>
   );
 }

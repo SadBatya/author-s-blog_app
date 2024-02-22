@@ -2,8 +2,27 @@ import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import { Header, Main, Footer} from './components/index'
 import { Authorization, Registration, Users, Post } from './pages';
+import { useLayoutEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setUser } from './store/actions';
 
 function App() {
+  const dispatch = useDispatch()
+  useLayoutEffect(() => {
+    const currentUserDataJSON = sessionStorage.getItem('userData')
+
+    if(!currentUserDataJSON){
+      return
+    }
+
+    const currentUserData = JSON.parse(currentUserDataJSON)
+
+    dispatch(setUser({
+      ...currentUserData,
+      roleId: Number(currentUserData.roleId)
+    }))
+  }, [dispatch])
+
   return (
     <div className='flex justify-between flex-col text-center min-h-screen'>
       <Header />
@@ -19,7 +38,7 @@ function App() {
            <Route path='*' element={<div>Ошибка доступа</div>} />
         </Routes>
       </Main>
-      <Footer />
+      <Footer /> 
     </div>
   );
 }

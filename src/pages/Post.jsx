@@ -12,8 +12,8 @@ export default function Post() {
   const params = useParams()
   const requestServer = useServerRequest()
   const post = useSelector(selectPost)
-  console.log(post)
-  console.log(post.comments)
+  
+  // console.log(post.comments)
 
   useEffect(() => {
     dispatch(loadPostAsync(requestServer,params.id))
@@ -22,7 +22,7 @@ export default function Post() {
   return (
     <div className="px-20 py-10">
       <PostContent post={post}/>
-      <Comments comments={post.comments} postId={post.id}/>
+      {post.comments && <Comments comments={post.comments} postId={post.id}/>}
     </div>
   )
 }
