@@ -17,7 +17,6 @@ export default function ControlPanel() {
   const onLogout = () => {
     dispatch(logout(session))
     sessionStorage.removeItem('userData')
-    console.log('click')
   }
 
   return (

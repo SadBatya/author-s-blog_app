@@ -15,6 +15,7 @@ export default function Comments({ comments, postId }) {
   const onNewCommentAd = (userId, postId, content, event) => {    
     event.preventDefault();
     dispatch(addCommentAsync(requestServer, userId, postId, content))
+    setNewComment('')
   }
 
 

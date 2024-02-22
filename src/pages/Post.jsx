@@ -13,7 +13,6 @@ export default function Post() {
   const requestServer = useServerRequest()
   const post = useSelector(selectPost)
   
-  // console.log(post.comments)
 
   useEffect(() => {
     dispatch(loadPostAsync(requestServer,params.id))
