@@ -5,6 +5,7 @@ import { Authorization, Registration, Users, Post } from './pages';
 import { useLayoutEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser } from './store/actions';
+import { Modal } from './components'
 
 function App() {
   const dispatch = useDispatch()
@@ -39,6 +40,7 @@ function App() {
         </Routes>
       </Main>
       <Footer /> 
+      <Modal />
     </div>
   );
 }

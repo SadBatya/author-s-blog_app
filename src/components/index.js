@@ -10,4 +10,5 @@ export { default as UserInfo } from './UserInfo'
 export { default as UsersContent } from './UsersContent'
 export { default as PostContent } from './PostContent'
 export { default as Comments } from './Comments' 
+export { default as Modal } from './Modal'
 
