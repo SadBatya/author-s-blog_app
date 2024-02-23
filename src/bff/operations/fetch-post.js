@@ -7,7 +7,6 @@ export const fetchPost = async (postId) => {
   const users = await getUser()
   
   const commentsWithAuthor = comments.map((comment) => {
-    console.log(users)
     const user = users.find(({ id }) =>  id === comment.authorId)
     return {
       ...comment,

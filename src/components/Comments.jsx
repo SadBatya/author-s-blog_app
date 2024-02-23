@@ -18,7 +18,6 @@ export default function Comments({ comments, postId }) {
     setNewComment('')
   }
 
-
   return (
     <>
       <form
@@ -42,7 +41,7 @@ export default function Comments({ comments, postId }) {
         </button>
       </form>
       {comments?.map(({publishedAt, id, author, content}) => (
-        <CommentBox key={id} id={id} author={author} content={content} publishedAt={publishedAt}/>
+        <CommentBox key={id} postId={postId} id={id} author={author} content={content} publishedAt={publishedAt}/>
       ))}
     </>
   );

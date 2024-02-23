@@ -1,6 +1,17 @@
+import { useDispatch } from "react-redux"
 import Icon from "./Icon"
+import { removeCommentAsync } from "../store/actions"
+import { useServerRequest } from "../hooks"
 
-export default function CommentBox({ publishedAt, time, id, author, content }) {
+export default function CommentBox({ publishedAt, time, id, author, content, postId }) {
+
+  const dispatch = useDispatch()
+  const requestServer = useServerRequest()
+
+  const onCommentRemove = (id) => {    
+    dispatch(removeCommentAsync(requestServer, postId, id))
+    console.log('click')
+  }
 
   return (
     <div className="flex gap-2 mb-2 justify-center">
@@ -19,7 +30,7 @@ export default function CommentBox({ publishedAt, time, id, author, content }) {
         <p className="text-left p-2">{content}</p>
       </div>
       <button className="self-start">
-        <Icon id={'fa-trash'} parameters={'text-lg'}/>
+        <Icon id={'fa-trash'} parameters={'text-lg'} onClick={() => onCommentRemove(id)}/>
       </button>
     </div>
   )
