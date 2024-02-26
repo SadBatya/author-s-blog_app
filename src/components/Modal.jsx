@@ -14,9 +14,9 @@ export default function Modal({ className }) {
   const onConfirm = useSelector(selectModalOnConfirm);
   const onCancel = useSelector(selectModalOnCancel);
 
-  // if(!isOpen) {
-  //   return null
-  // }
+  if(!isOpen) {
+    return null
+  }
 
 
   return (
@@ -25,8 +25,8 @@ export default function Modal({ className }) {
       <div className='flex flex-col justify-center gap-4 h-auto w-80 m-auto relative top-2/4 transform -translate-y-2/4 bg-white border p-5 rounded-md'>
         <H2>Удалить комментарий?</H2>
         <div className='flex justify-center gap-3'>
-          <Button onConfirm={onConfirm} text={'Да'}/>
-          <Button onCancel={onCancel} text={'Отмена'} />
+          <Button onClick={onConfirm} text={'Да'}/>
+          <Button onClick={onCancel} text={'Отмена'} />
         </div>
       </div>
     </div>

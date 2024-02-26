@@ -1,5 +1,5 @@
-export default function Button({ text, ...props }) {
+export default function Button({ text, onClick, ...props }) {
   return (
-    <button className="max-w-md border border-black">{text}</button>
+    <button onClick={onClick} className="max-w-md border border-black">{text}</button>
   )
 }

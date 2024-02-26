@@ -109,7 +109,22 @@
       ]
     }
   ],
-  "comments": [],
+  "comments": [
+    {
+      "author_id": "001",
+      "post_id": "001",
+      "published_at": "1970-04-02 03:21",
+      "content": "",
+      "id": 3
+    },
+    {
+      "author_id": "001",
+      "post_id": "001",
+      "published_at": "1970-04-27 13:27",
+      "content": "",
+      "id": 4
+    }
+  ],
   "sessions": [
     {
       "hash": "0.28413272142265832975738248933339491486549377441406",
