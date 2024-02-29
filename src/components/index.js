@@ -11,4 +11,5 @@ export { default as UsersContent } from './UsersContent'
 export { default as PostContent } from './PostContent'
 export { default as Comments } from './Comments' 
 export { default as Modal } from './Modal'
+export { default as SpecialPanel } from './SpecialPanel'
 

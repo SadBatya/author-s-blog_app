@@ -36,6 +36,7 @@ function App() {
            <Route path='*' element={<div>Главная страница</div>} />
            <Route path='*' element={<div>Посты</div>} />
            <Route path='/post/:id' element={<Post />} />
+           <Route path='/post/:id/edit' element={<Post />} />
            <Route path='*' element={<div>Ошибка доступа</div>} />
         </Routes>
       </Main>
