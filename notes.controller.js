@@ -51,4 +51,5 @@ module.exports = {
   addNote,
   printNotes,
   removeNote,
+  getNotes
 };
