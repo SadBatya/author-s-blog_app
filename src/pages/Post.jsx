@@ -1,9 +1,9 @@
-import { useEffect } from "react"
+import { useEffect, useLayoutEffect  } from "react"
 import { useParams, useMatch } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux"
 import { PostContent, Comments } from "../components"
 import { useServerRequest } from "../hooks" 
-import { loadPostAsync } from "../store/actions"
+import { loadPostAsync, RESET_POST_DATA } from "../store/actions"
 import { selectPost } from "../selectors"
 import PostForm from "../components/PostForm"
 
@@ -15,6 +15,9 @@ export default function Post() {
   const post = useSelector(selectPost)
   const isEditing = useMatch('/post/:id/edit')
   
+  useLayoutEffect(() => {
+    dispatch(RESET_POST_DATA)
+  }, [dispatch])
 
   useEffect(() => {
     dispatch(loadPostAsync(requestServer,params.id))

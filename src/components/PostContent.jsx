@@ -15,7 +15,7 @@ export default function PostContent({
       />
       <div className='flex flex-col text-left mb-2'>
         <H2>{title}</H2>
-        <SpecialPanel publishedAt={publishedAt} button={'fa-trash'}/>
+        <SpecialPanel id={id} publishedAt={publishedAt} button={'fa-trash'}/>
         <div className='text-gray-800'>{content}</div>
       </div>
     </div>
