@@ -7,36 +7,53 @@
   <title><%= title %></title>
 </head>
 <body>
+  
   <% if(created) {%>
   <div class="alert alert-success">
-    Note has been created
+    Заметка создана
   </div>
   <% } %>
+
+  <% if(visible) {%>
   <div class="container">
-    <h1>This is working</h1>
+    <div class="modal_window border p-2 rounded position-relative">
+      <h1>Введите новое название</h1>
+      <form action="/:id" method="post">
+        <input type="text" name="new-title" id="new-title" class="form-control">
+        <div class="mt-2">
+          <button class="btn btn-primary">Ok</button>
+          <button class="btn btn-light">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <% } %>
+
+
+    <h1>Список заметок</h1>
     <form action="/" method="post" class="mb-2">
       <div class="form-group mb-2">
-        <input type="text" name="title" id="form-control">
+        <input type="text" name="title" id="title" class="form-control">
       </div>
-      <button class="btn btn-primary" type="submit">Create</button>
+      <button class="btn btn-primary" type="submit">Создать</button>
     </form>
     <% if (notes.length) {%>
     <div class="card">
       <ul class="list-group">
         <% for (let i = 0; i < notes.length; i++) { %>
-        <li class="list-group-item d-flex justify-content-between aligh-items-center">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
           <%= notes[i].title %>
-          <button  class="btn btn-danger" data-type="remove" data-id="<%= notes=[i].id %>">x</button>
+          <div class="buttons">
+            <button class="btn btn-danger" data-type="remove" data-id="<%= notes[i].id %>">x</button>
+            <button class="btn btn-danger" data-type="edit" data-id="<%= notes[i].id %>">edit</button>
+          </div>
         </li>
         <% } %>
       </ul>
     </div>
-    <%}else {%>
-      <p>No notes!</p>
+    <%} else {%>
+      <p>Нет заметок!</p>
     <% } %>
   </div>
-
-
   <script src="/app.js"></script>
 </body>
 </html>

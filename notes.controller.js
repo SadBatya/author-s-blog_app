@@ -4,9 +4,12 @@ const chalk = require('chalk');
 const notesPath = path.join(__dirname, 'db.json');
 
 async function addNote(title) {
+  if(!title){
+    return
+  }
   const data = await fs.readFile(notesPath, { encoding: 'utf-8' });
   notes = JSON.parse(data);
-
+  
   const note = {
     title,
     id: Date.now().toString(),
@@ -31,6 +34,26 @@ async function printNotes() {
   });
 }
 
+async function editNote(noteId, newTitle) {
+  try {
+    const data = await fs.readFile(notesPath, { encoding: 'utf-8' });
+    const notes = JSON.parse(data)
+    const findNote = notes.find(note => note.id === noteId)
+
+    if(findNote){
+      findNote.title = newTitle
+      console.log(chalk.green('Note editing is done'))
+    }else{
+      console.log(chalk.red('I can`t find this note'))
+    }
+
+  } catch (error) {
+    console.log('Edit error:', error)
+  } 
+}
+
+
+
 async function removeNote(id) {
   try {
     const data = await fs.readFile(notesPath, { encoding: 'utf-8' });
@@ -51,5 +74,6 @@ module.exports = {
   addNote,
   printNotes,
   removeNote,
-  getNotes
+  getNotes,
+  editNote
 };
