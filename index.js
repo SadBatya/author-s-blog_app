@@ -27,23 +27,13 @@ app.get('/', async (req, res) => {
 })
 
 //редактирование заметки
-app.post('/:id', async (req, res) => {
-  const noteId = req.params.id
-  const newTitle = req.body['new-title']
-  console.log(req.body)
-  console.log(noteId)
-  
-  try {
-    await editNote(noteId, newTitle)
-    res.render('index', {
-      title: 'Express App',
-      notes: await getNotes(),
-      created: false,
-      visible: true
-    })
-  } catch (error) {
-    console.log(message)
-  }
+app.put('/:id', async (req, res) => {
+  await editNote({ id: req.params.id, title: req.body.title })
+  res.render('index', {
+    title: 'Express App',
+    notes: await getNotes(),
+    created: false
+  })
 })
 
 
@@ -53,7 +43,6 @@ app.delete('/:id', async (req, res) => {
     title: 'Express App',
     notes: await getNotes(),
     created: false,
-    visible: false,
   })
 })
 
@@ -64,7 +53,6 @@ app.post('/', async (req, res) => {
     title: 'Express App',
     notes: await getNotes(),
     created: true,
-    visible: true
   })
 })
 

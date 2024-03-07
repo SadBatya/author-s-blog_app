@@ -7,28 +7,12 @@
   <title><%= title %></title>
 </head>
 <body>
-  
+  <div class="container">
   <% if(created) {%>
   <div class="alert alert-success">
     Заметка создана
   </div>
   <% } %>
-
-  <% if(visible) {%>
-  <div class="container">
-    <div class="modal_window border p-2 rounded position-relative">
-      <h1>Введите новое название</h1>
-      <form action="/:id" method="post">
-        <input type="text" name="new-title" id="new-title" class="form-control">
-        <div class="mt-2">
-          <button class="btn btn-primary">Ok</button>
-          <button class="btn btn-light">Cancel</button>
-        </div>
-      </form>
-    </div>
-    <% } %>
-
-
     <h1>Список заметок</h1>
     <form action="/" method="post" class="mb-2">
       <div class="form-group mb-2">
@@ -44,7 +28,7 @@
           <%= notes[i].title %>
           <div class="buttons">
             <button class="btn btn-danger" data-type="remove" data-id="<%= notes[i].id %>">x</button>
-            <button class="btn btn-danger" data-type="edit" data-id="<%= notes[i].id %>">edit</button>
+            <button class="btn btn-primary" data-type="edit" data-id="<%= notes[i].id %>" data-title="<%= notes[i].title %>">Edit</button>
           </div>
         </li>
         <% } %>

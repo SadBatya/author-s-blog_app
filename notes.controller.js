@@ -36,23 +36,23 @@ async function printNotes() {
 
 async function editNote(noteId, newTitle) {
   try {
-    const data = await fs.readFile(notesPath, { encoding: 'utf-8' });
-    const notes = JSON.parse(data)
-    const findNote = notes.find(note => note.id === noteId)
+      const data = await fs.readFile(notesPath, { encoding: 'utf-8' });
+      let notes = JSON.parse(data);
+      const noteIndex = notes.findIndex((note) => note.id === noteId);
 
-    if(findNote){
-      findNote.title = newTitle
-      console.log(chalk.green('Note editing is done'))
-    }else{
-      console.log(chalk.red('I can`t find this note'))
-    }
-
+      if (noteIndex !== -1) {
+          notes[noteIndex].title = newTitle;
+          await fs.writeFile(notesPath, JSON.stringify(notes, null, 2), {
+              encoding: 'utf-8',
+          });
+          console.log(chalk.green('Note editing is done'));
+      } else {
+          console.log(chalk.red('I can`t find this note'));
+      }
   } catch (error) {
-    console.log('Edit error:', error)
-  } 
+      console.log('Edit error:', error);
+  }
 }
-
-
 
 async function removeNote(id) {
   try {
