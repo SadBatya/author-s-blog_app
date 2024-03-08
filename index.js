@@ -1,18 +1,16 @@
 const express = require('express')
 const chalk = require('chalk')
 const path = require('path')
-const basePath = path.join(__dirname, 'pages')
-const { addNote, getNotes, removeNote, editNote } = require('./notes.controller')
+const { addNote, getNotes, removeNote, updateNote } = require('./notes.controller')
+const mongoose = require('mongoose')
 const port = 3000
 const app = express()
 
-
 app.set('view engine', 'ejs')
-app.set('views', path.join(__dirname, 'pages'));
+app.set('views', 'pages')
 
-
-app.use(express.static(path.resolve(__dirname, 'public')));
-
+app.use(express.static(path.resolve(__dirname, 'public')))
+app.use(express.json())
 app.use(express.urlencoded({
   extended: true
 }))
@@ -21,14 +19,30 @@ app.get('/', async (req, res) => {
   res.render('index', {
     title: 'Express App',
     notes: await getNotes(),
-    created: false,
-    visible: true
+    created: false
   })
 })
 
-//редактирование заметки
+app.post('/', async (req, res) => {
+  await addNote(req.body.title)
+  res.render('index', {
+    title: 'Express App',
+    notes: await getNotes(),
+    created: true
+  })
+})
+
+app.delete('/:id', async (req, res) => {
+  await removeNote(req.params.id)
+  res.render('index', {
+    title: 'Express App',
+    notes: await getNotes(),
+    created: false
+  })
+})
+
 app.put('/:id', async (req, res) => {
-  await editNote({ id: req.params.id, title: req.body.title })
+  await updateNote({ id: req.params.id, title: req.body.title })
   res.render('index', {
     title: 'Express App',
     notes: await getNotes(),
@@ -37,26 +51,11 @@ app.put('/:id', async (req, res) => {
 })
 
 
-app.delete('/:id', async (req, res) => {
-  removeNote(req.params.id)
-  res.render('index', {
-    title: 'Express App',
-    notes: await getNotes(),
-    created: false,
+
+
+mongoose.connect('mongodb+srv://vladimir:14235678Asdf@sadbatya.se480p9.mongodb.net/?retryWrites=true&w=majority&appName=sadbatya')
+  .then(() => {
+    app.listen(port, () => {
+      console.log(chalk.green(`Server has been started on port ${port}...`))
+    })
   })
-})
-
-
-app.post('/', async (req, res) => {
-  await addNote(req.body.title)
-  res.render('index', {
-    title: 'Express App',
-    notes: await getNotes(),
-    created: true,
-  })
-})
-
-
-app.listen(port, () => {
-  console.log(chalk.green(`server has been started... ${port}`))
-})

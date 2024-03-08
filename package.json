@@ -1,27 +1,28 @@
 {
   "name": "note-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This is simple NodeJS Application",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "serve": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "nodemon index.js"
   },
   "keywords": [
     "node",
     "javascript"
   ],
-  "author": "Vladimir",
+  "author": "Vladilen Minin <v@mail.ru>",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.1",
     "chalk": "^4.1.2",
-    "ejs": "^3.1.9",
-    "express": "^4.18.3",
-    "yargs": "^17.7.2"
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "mongoose": "^8.2.1",
+    "yargs": "^17.2.1"
   },
   "devDependencies": {
-    "@types/yargs": "^17.0.32",
-    "nodemon": "^3.1.0"
+    "@types/yargs": "^17.0.4",
+    "nodemon": "^2.0.14"
   }
 }

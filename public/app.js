@@ -1,30 +1,26 @@
-document.addEventListener('click', (e) => {
-  if(e.target.dataset.type === 'remove'){
-    const id = e.target.dataset.id
+document.addEventListener('click', event => {
+  if (event.target.dataset.type === 'remove') {
+    const id = event.target.dataset.id
+
     remove(id).then(() => {
-      e.target.parentNode.closest('li').remove()
+      event.target.closest('li').remove()
     })
-  }else if(e.target.dataset.type === 'edit'){
+  }
 
-    const id = e.target.dataset.id
-    const title = e.target.dataset.title
-
-    const newNoteInputValue = prompt('Введите новое значение заметки')
-
-    if(newNoteInputValue !== null){
-      edit({id, title: newNoteInputValue}).then(() => {
-        e.target.closest('li').querySelector('span').innerText = newNoteInputValue
+  if (event.target.dataset.type === 'edit') {
+    const id = event.target.dataset.id
+    const title = event.target.dataset.title
+    const newTitle = prompt('Введите новое название', title)
+    if (newTitle !== null) {
+      update({ id, title: newTitle }).then(() => {
+        event.target.closest('li').querySelector('span').innerText = newTitle
       })
     }
-
-    edit(e.target.dataset.id)
-    console.log('edit button click id:', e.target.dataset.id)
   }
 })
 
-
-async function edit(newNote){
-  await fetch(`/${newNote.id}`,{
+async function update(newNote) {
+  await fetch(`/${newNote.id}`, {
     method: 'PUT',
     headers: {
       'Accept': 'application/json',
@@ -34,6 +30,6 @@ async function edit(newNote){
   })
 }
 
-async function remove(id){
+async function remove(id) {
   await fetch(`/${id}`, {method: 'DELETE'})
 }
