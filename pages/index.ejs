@@ -9,6 +9,11 @@
   <title><%= title %></title>
 </head>
 <body>
+  <% if (error) {%>
+    <div class="alert alert-danger">
+      Something went wrong!
+    </div>
+  <% } %>
 
   <% if (created) {%>
     <div class="alert alert-success">

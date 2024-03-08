@@ -24,12 +24,23 @@ app.get('/', async (req, res) => {
 })
 
 app.post('/', async (req, res) => {
-  await addNote(req.body.title)
-  res.render('index', {
+  try {
+    await addNote(req.body.title)
+    res.render('index', {
     title: 'Express App',
     notes: await getNotes(),
-    created: true
+    created: true,
+    error: false,
   })
+  } catch (error) {
+    console.log('error:', error)
+    res.render('index', {
+      title: 'Express App',
+      notes: await getNotes(),
+      created: false,
+      error: true
+    })
+  }
 })
 
 app.delete('/:id', async (req, res) => {
@@ -37,7 +48,8 @@ app.delete('/:id', async (req, res) => {
   res.render('index', {
     title: 'Express App',
     notes: await getNotes(),
-    created: false
+    created: true,
+    error: false,
   })
 })
 
@@ -46,7 +58,8 @@ app.put('/:id', async (req, res) => {
   res.render('index', {
     title: 'Express App',
     notes: await getNotes(),
-    created: false
+    created: false,
+    error: false
   })
 })
 
